@@ -1,0 +1,5 @@
+# Khoảng cách tối đa (-1 để vô hiệu hóa)
+trade_max_distance: 10
+
+# Thời gian chờ phản hồi (giây)
+trade_request_timeout: 30

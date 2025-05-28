@@ -1,0 +1,14 @@
+title: "TRADE - %player1% & %player2%"
+# Kích thước inventory (9, 18, 27, 36, 45, 54)
+slots: 54
+
+# Tùy chỉnh từng ô
+custom_slots:
+  - slot: 40 # Nút xác nhận
+    item: LIME_DYE
+    name: "&aXác nhận"
+    action: "accept"
+  - slot: 31 # Nút hủy
+    item: RED_DYE
+    name: "&cHủy bỏ"
+    action: "deny"

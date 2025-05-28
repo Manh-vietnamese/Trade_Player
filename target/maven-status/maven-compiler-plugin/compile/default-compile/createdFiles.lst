@@ -1,0 +1,6 @@
+Trade_Player\Managers\TRADE_Manager.class
+Trade_Player\Managers\TradeSession.class
+Trade_Player\Listeners\TRADE_Listener.class
+Trade_Player\Messenger\Messager.class
+Trade_Player\Main_plugin.class
+Trade_Player\Commands\TRADE_Command.class

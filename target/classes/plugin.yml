@@ -1,0 +1,14 @@
+name: Trade_Player
+version: 1.0
+main: Trade_Player.Main_plugin
+api-version: 1.16.5
+description: A simple Minecraft plugin.
+commands:
+  trade:
+    description: "Khởi tạo trao đổi hoặc reload plugin"
+    usage: /trade <player|reload|accept|deny>
+
+permissions:
+  trade.reload:
+    description: "Cho phép reload plugin"
+    default: op
