@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 
 import Trade_Player.Main_plugin;
 import Trade_Player.Managers.TRADE_Manager;
@@ -154,6 +155,24 @@ public void onInventoryClick(InventoryClickEvent e) {
 
         isClosing = false;
     }
+
+@EventHandler(priority = EventPriority.HIGHEST)
+public void onInventoryDrag(InventoryDragEvent e) {
+    if (!e.getView().getTitle().contains("TRADE")) return;
+
+    Player player = (Player) e.getWhoClicked();
+    TradeSession session = TRADE_Manager.getTradeSession(player);
+    if (session == null) return;
+
+    // Nếu bất kỳ slot kéo thả không hợp lệ -> cancel toàn bộ
+    for (int slot : e.getRawSlots()) {
+        if (!isAllowedForPlayer(player, slot)) {
+            e.setCancelled(true);
+            return;
+        }
+    }
+}
+
 
 // Thêm phương thức kiểm tra slot hợp lệ cho từng người chơi
 private boolean isAllowedForPlayer(Player player, int slot) {

@@ -32,13 +32,21 @@ public class TradeSession {
     
 public void addItem(Player player, int slot, ItemStack item) {
     // Debug log
-    Bukkit.getLogger().info("Adding item to slot " + slot + " for " + player.getName() + 
-                          ": " + (item != null ? item.getType() + " x" + item.getAmount() : "null"));
+    Bukkit.getLogger().info("Adding item to slot " + slot + " for " + player.getName() + ": " + (item != null ? item.getType() + " x" + item.getAmount() : "null"));
 
     // Ánh xạ slot
-    Map<Integer, Integer> slotMapping = player.equals(player1) ?
-        Map.of(10,0,11,1,19,2,20,3,21,4,28,5,29,6,30,7,37,8,38,9,39,10) :
-        Map.of(15,0,16,1,23,2,24,3,25,4,32,5,33,6,34,7,41,8,42,9,43,10);
+    Map<Integer, Integer> slotMapping = new HashMap<>();
+    if (player.equals(player1)) {
+        slotMapping.put(10, 0); slotMapping.put(11, 1); slotMapping.put(19, 2);
+        slotMapping.put(20, 3); slotMapping.put(21, 4); slotMapping.put(28, 5);
+        slotMapping.put(29, 6); slotMapping.put(30, 7); slotMapping.put(37, 8);
+        slotMapping.put(38, 9); slotMapping.put(39, 10);
+    } else {
+        slotMapping.put(15, 0); slotMapping.put(16, 1); slotMapping.put(23, 2);
+        slotMapping.put(24, 3); slotMapping.put(25, 4); slotMapping.put(32, 5);
+        slotMapping.put(33, 6); slotMapping.put(34, 7); slotMapping.put(41, 8);
+        slotMapping.put(42, 9); slotMapping.put(43, 10);
+    }
 
     Integer mappedSlot = slotMapping.get(slot);
     if (mappedSlot == null) return;
@@ -51,23 +59,29 @@ public void addItem(Player player, int slot, ItemStack item) {
     updateTradeGUI();
 }
 
-private void updateTradeGUI() {
-    Bukkit.getScheduler().runTask(plugin, () -> {
-        Inventory gui = player1.getOpenInventory().getTopInventory();
-        
-        // Cập nhật vật phẩm cho player1
-        Map<Integer, Integer> slotMap1 = Map.of(10,0,11,1,19,2,20,3,21,4,28,5,29,6,30,7,37,8,38,9,39,10);
-        slotMap1.forEach((guiSlot, arrSlot) -> {
-            gui.setItem(guiSlot, items1[arrSlot] != null ? items1[arrSlot].clone() : null);
-        });
+    private void updateTradeGUI() {
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            Inventory gui = player1.getOpenInventory().getTopInventory();
 
-        // Cập nhật vật phẩm cho player2
-        Map<Integer, Integer> slotMap2 = Map.of(15,0,16,1,23,2,24,3,25,4,32,5,33,6,34,7,41,8,42,9,43,10);
-        slotMap2.forEach((guiSlot, arrSlot) -> {
-            gui.setItem(guiSlot, items2[arrSlot] != null ? items2[arrSlot].clone() : null);
+            Map<Integer, Integer> slotMap1 = new HashMap<>();
+            slotMap1.put(10, 0); slotMap1.put(11, 1); slotMap1.put(19, 2);
+            slotMap1.put(20, 3); slotMap1.put(21, 4); slotMap1.put(28, 5);
+            slotMap1.put(29, 6); slotMap1.put(30, 7); slotMap1.put(37, 8);
+            slotMap1.put(38, 9); slotMap1.put(39, 10);
+            slotMap1.forEach((guiSlot, arrSlot) -> {
+                gui.setItem(guiSlot, items1[arrSlot] != null ? items1[arrSlot].clone() : null);
+            });
+
+            Map<Integer, Integer> slotMap2 = new HashMap<>();
+            slotMap2.put(15, 0); slotMap2.put(16, 1); slotMap2.put(23, 2);
+            slotMap2.put(24, 3); slotMap2.put(25, 4); slotMap2.put(32, 5);
+            slotMap2.put(33, 6); slotMap2.put(34, 7); slotMap2.put(41, 8);
+            slotMap2.put(42, 9); slotMap2.put(43, 10);
+            slotMap2.forEach((guiSlot, arrSlot) -> {
+                gui.setItem(guiSlot, items2[arrSlot] != null ? items2[arrSlot].clone() : null);
+            });
         });
-    });
-}
+    }
 
     public void confirmTrade(Player player) {
         if (player.equals(player1)) {
